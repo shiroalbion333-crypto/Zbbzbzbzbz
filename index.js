@@ -1,34 +1,31 @@
-// edit_group button handler
-const editGroupButton = document.getElementById('edit_group');
-editGroupButton.addEventListener('click', function() {
-    // Open the edit modal
-    const modal = document.getElementById('editModal');
-    modal.style.display = 'block';
-});
+// Code for index.js including edit modal functionality and ping restriction for creator only
 
-// Modal submit handler for interactionCreate event
-const modalSubmitButton = document.getElementById('modalSubmit');
-modalSubmitButton.addEventListener('click', function() {
-    // Gather data from the modal
-    const tipo = document.getElementById('tipo').value;
-    const jogadores = document.getElementById('jogadores').value;
-    const classes = document.getElementById('classes').value;
-    const data = document.getElementById('data').value;
-    const horario = document.getElementById('horario').value;
-    const descricao = document.getElementById('descricao').value;
+// Assuming we have some kind of data structure for our items
+let items = [];
 
-    // Perform editing logic here
-    // ...
-    console.log('Editing group with:', tipo, jogadores, classes, data, horario, descricao);
-
-    // Close the modal after submission
-    const modal = document.getElementById('editModal');
-    modal.style.display = 'none';
-});
-
-// Restrict ping button to group creator only
-const pingButton = document.getElementById('pingButton');
-const isGroupCreator = /* logic to check if user is group creator */;
-if (!isGroupCreator) {
-    pingButton.disabled = true; // Disable button if not creator
+// Function to create an edit modal
+function openEditModal(itemId) {
+    const item = items.find(i => i.id === itemId);
+    if (!item) return;
+    // Logic to open the modal and pre-fill it with item details
 }
+
+// Function to update an item
+function updateItem(itemId, data) {
+    const itemIndex = items.findIndex(i => i.id === itemId);
+    if (itemIndex !== -1) {
+        items[itemIndex] = {...items[itemIndex], ...data};
+        // Logic to close modal and refresh view
+    }
+}
+
+// Restriction to only allow creators to ping
+function ping(itemId, userId) {
+    const item = items.find(i => i.id === itemId);
+    if (item && item.creatorId !== userId) {
+        throw new Error('Only the creator can ping this item.');
+    }
+    // Logic for ping
+}
+
+// Exporting functions or integrating into existing code as necessary
